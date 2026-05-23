@@ -276,8 +276,10 @@ function formatLargeNumber(n) {
 /* ---- Waitlist Form ---- */
 function initWaitlistForm() {
   const form = document.getElementById('waitlist-form');
-  const btn = document.getElementById('waitlist-submit');
   const input = document.getElementById('waitlist-email');
+  const defaultState = document.getElementById('waitlist-default');
+  const successState = document.getElementById('waitlist-success');
+  const successEmail = document.getElementById('success-email');
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -285,20 +287,23 @@ function initWaitlistForm() {
     const email = input.value.trim();
     if (!email) return;
 
-    // Visual feedback
-    btn.innerHTML = '<span>✓ You\'re on the list</span>';
-    btn.style.background = '#28c840';
-    btn.style.pointerEvents = 'none';
-    input.disabled = true;
-    input.value = email;
+    // Show success state
+    successEmail.textContent = email;
+    defaultState.style.opacity = '0';
+    defaultState.style.transform = 'translateY(-10px)';
+    defaultState.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
 
-    // Reset after a few seconds
     setTimeout(() => {
-      btn.innerHTML = '<span>Request Access</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-      btn.style.background = '';
-      btn.style.pointerEvents = '';
-      input.disabled = false;
-      input.value = '';
-    }, 3000);
+      defaultState.style.display = 'none';
+      successState.style.display = 'block';
+      successState.style.opacity = '0';
+      successState.style.transform = 'translateY(10px)';
+
+      requestAnimationFrame(() => {
+        successState.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        successState.style.opacity = '1';
+        successState.style.transform = 'translateY(0)';
+      });
+    }, 300);
   });
 }

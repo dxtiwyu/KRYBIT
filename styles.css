@@ -1069,6 +1069,33 @@ img {
   margin-top: 16px;
 }
 
+/* --- Waitlist Success State --- */
+.waitlist-success {
+  position: relative;
+}
+
+.success-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  color: #28c840;
+}
+
+.success-icon svg {
+  filter: drop-shadow(0 0 12px rgba(40, 200, 64, 0.4));
+}
+
+.waitlist-success .waitlist-title {
+  color: #28c840;
+}
+
+.waitlist-success .waitlist-desc strong {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
 /* ============================================
    FOOTER
    ============================================ */
@@ -1109,6 +1136,21 @@ img {
   line-height: 1.6;
 }
 
+.footer-email {
+  margin-top: 12px;
+}
+
+.footer-email a {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--accent);
+  transition: color var(--transition-fast);
+}
+
+.footer-email a:hover {
+  color: #33ffd6;
+}
+
 .footer-links-group {
   display: flex;
   gap: 64px;
@@ -1141,7 +1183,7 @@ img {
 
 .footer-bottom {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding-top: 32px;
   border-top: 1px solid var(--border-primary);
@@ -1150,30 +1192,6 @@ img {
 .footer-bottom p {
   font-size: 0.8rem;
   color: var(--text-tertiary);
-}
-
-.footer-socials {
-  display: flex;
-  gap: 16px;
-}
-
-.social-link {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--bg-card);
-  border: 1px solid var(--border-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-tertiary);
-  transition: all var(--transition-fast);
-}
-
-.social-link:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: var(--accent-subtle);
 }
 
 /* ============================================
