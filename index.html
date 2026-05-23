@@ -97,32 +97,35 @@
       <div class="section-header">
         <span class="section-label">Architecture</span>
         <h2 class="section-title">
-          Not a GPT wrapper.<br />
+          Not a wrapper. Not a copilot.<br />
           <span class="accent-text">A fully autonomous pipeline.</span>
         </h2>
         <p class="section-desc">
-          Krybit's three-stage engine hooks directly into your CI/CD. No chat boxes. No copy-paste. 
-          Just deterministic, agentic test generation that runs on every push.
+          Krybit installs as a GitHub App. On every push, it reads your diff, maps the affected UI, 
+          and uses the <strong>Anthropic API</strong> to generate and maintain your entire Playwright test suite. 
+          No chat. No prompts. No human in the loop.
         </p>
       </div>
 
       <div class="pipeline-steps">
         <!-- Step 1 -->
-        <div class="pipeline-card" id="step-agentic-crawling">
+        <div class="pipeline-card" id="step-webhook-trigger">
           <div class="pipeline-card-number">01</div>
           <div class="pipeline-card-icon">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
           </div>
-          <h3 class="pipeline-card-title">Agentic Crawling</h3>
+          <h3 class="pipeline-card-title">Webhook &amp; Diff Parsing</h3>
           <p class="pipeline-card-desc">
-            The agent spins up a headless browser and autonomously maps your entire UI surface — 
-            every route, every interactive element, every DOM mutation. It builds a living component graph 
-            that updates on every commit.
+            When code is pushed, Krybit's GitHub App receives the webhook. It pulls the commit diff, 
+            identifies which source files changed, and maps those files to the routes and components they affect. 
+            It then spins up your app in an isolated sandbox and launches a headless browser to 
+            crawl only the affected routes — capturing the live DOM state and building a component graph.
           </p>
           <div class="pipeline-card-tags">
+            <span class="tag">GitHub Webhooks</span>
+            <span class="tag">AST Parsing</span>
             <span class="tag">Headless Chromium</span>
-            <span class="tag">DOM Diffing</span>
-            <span class="tag">Component Graph</span>
+            <span class="tag">DOM Snapshots</span>
           </div>
         </div>
 
@@ -132,17 +135,18 @@
           <div class="pipeline-card-icon claude-icon">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
           </div>
-          <h3 class="pipeline-card-title">Logic Generation via <span class="claude-highlight">Claude</span></h3>
+          <h3 class="pipeline-card-title">Test Generation via <span class="claude-highlight">Claude</span></h3>
           <p class="pipeline-card-desc">
-            Code diffs and the component graph are sent to <strong>Claude 3.5 Sonnet</strong> via the Anthropic API 
-            in agentic loops. Claude reasons about user flows, generates type-safe Playwright assertions, 
-            and self-heals broken selectors — all without human intervention.
+            The code diff, DOM snapshot, and existing test files are sent to <strong>Claude</strong> through 
+            the <strong>Anthropic API</strong>. Claude reads what changed, understands the user flows affected, 
+            and writes new Playwright test assertions or updates existing ones. If selectors broke because 
+            a class name or ID changed, it reads the new DOM and rewrites them — that's the self-healing loop.
           </p>
           <div class="pipeline-card-tags">
-            <span class="tag claude-tag">Claude 3.5 Sonnet</span>
+            <span class="tag claude-tag">Claude</span>
             <span class="tag claude-tag">Anthropic API</span>
-            <span class="tag">Agentic Loops</span>
-            <span class="tag">Self-Healing</span>
+            <span class="tag">Assertion Generation</span>
+            <span class="tag">Selector Self-Healing</span>
           </div>
         </div>
 
@@ -152,17 +156,18 @@
           <div class="pipeline-card-icon">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 22V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12"/><path d="M22 12h-6"/><path d="M19 9l3 3-3 3"/></svg>
           </div>
-          <h3 class="pipeline-card-title">Native CI/CD Integration</h3>
+          <h3 class="pipeline-card-title">Commit, Run, Merge</h3>
           <p class="pipeline-card-desc">
-            Generated tests are committed directly to your repo and wired into <strong>GitHub Actions</strong> 
-            or <strong>GitLab CI</strong> pipelines. The agent opens PRs with test coverage diffs, 
-            runs the suite, and auto-merges on pass. Zero config.
+            The generated or updated test files are committed to a new branch. Krybit opens a PR 
+            against your base branch, triggers your <strong>GitHub Actions</strong> or <strong>GitLab CI</strong> 
+            pipeline to execute the full test suite, and if all tests pass, auto-merges the PR. 
+            If a test fails, it re-enters the Claude loop to debug and retry — up to 3 attempts before flagging for human review.
           </p>
           <div class="pipeline-card-tags">
             <span class="tag">GitHub Actions</span>
             <span class="tag">GitLab CI</span>
             <span class="tag">Auto-PR</span>
-            <span class="tag">Zero Config</span>
+            <span class="tag">Retry Loop</span>
           </div>
         </div>
       </div>
@@ -253,7 +258,7 @@
         <div class="stat-card" id="stat-api">
           <div class="stat-number" data-target="2400000">0</div>
           <div class="stat-suffix"></div>
-          <div class="stat-label">Claude API calls processed monthly</div>
+          <div class="stat-label">Anthropic API calls processed monthly</div>
         </div>
         <div class="stat-card" id="stat-uptime">
           <div class="stat-number" data-target="99.97">0</div>
@@ -281,7 +286,7 @@
           </div>
         </div>
         <div class="testimonial-card" id="testimonial-2">
-          <div class="testimonial-quote">"The self-healing alone saved us 40 engineering hours per sprint. The Claude-powered assertion generation is genuinely magical."</div>
+          <div class="testimonial-quote">"The self-healing alone saved us 40 engineering hours per sprint. Selectors break, Krybit fixes them before we even see the diff."</div>
           <div class="testimonial-author">
             <div class="testimonial-avatar">M.K.</div>
             <div>

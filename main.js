@@ -55,17 +55,18 @@ function initTerminal() {
 
   const lines = [
     { prompt: '❯', text: 'krybit agent --watch main', cls: '' },
-    { prompt: '⠋', text: 'Scanning repository for UI changes...', cls: 'info' },
-    { prompt: '✓', text: 'Detected 3 modified components in /src/auth', cls: 'success' },
-    { prompt: '⠋', text: 'Launching headless Chromium...', cls: 'info' },
-    { prompt: '✓', text: 'DOM diff captured: 47 mutations across 8 routes', cls: 'success' },
-    { prompt: '⠋', text: 'Calling Claude-3.5-Sonnet via Anthropic API...', cls: 'info' },
-    { prompt: '⠋', text: 'Generating Playwright assertions (agentic loop 1/3)...', cls: 'info' },
-    { prompt: '✓', text: 'Refactored auth.spec.ts — 12 assertions updated', cls: 'success' },
-    { prompt: '✓', text: 'Self-healed 3 broken selectors in dashboard.spec.ts', cls: 'success' },
-    { prompt: '⠋', text: 'Running test suite...', cls: 'warn' },
-    { prompt: '✓', text: 'All 47 tests passed. PR #482 auto-merged.', cls: 'success' },
-    { prompt: '✓', text: 'Pipeline complete. 0 flaky tests. 0 human intervention.', cls: 'success' },
+    { prompt: '⠋', text: 'Webhook received: push to main (commit a3f9c2d)', cls: 'info' },
+    { prompt: '⠋', text: 'Parsing diff... 3 files changed in /src/auth', cls: 'info' },
+    { prompt: '✓', text: 'Mapped changes → Login.tsx, Register.tsx, AuthGuard.tsx', cls: 'success' },
+    { prompt: '⠋', text: 'Spinning up sandbox → launching headless Chromium...', cls: 'info' },
+    { prompt: '✓', text: 'DOM snapshot captured: 47 elements across /login, /register, /dashboard', cls: 'success' },
+    { prompt: '⠋', text: 'Sending diff + DOM snapshot + existing specs to Anthropic API...', cls: 'info' },
+    { prompt: '⠋', text: 'Claude analyzing affected user flows...', cls: 'info' },
+    { prompt: '✓', text: 'Generated 12 new assertions for auth.spec.ts', cls: 'success' },
+    { prompt: '✓', text: 'Self-healed 3 broken selectors in dashboard.spec.ts (.btn-login → .auth-submit)', cls: 'success' },
+    { prompt: '⠋', text: 'Committing to branch krybit/test-update-482...', cls: 'info' },
+    { prompt: '⠋', text: 'Triggering GitHub Actions → running full Playwright suite...', cls: 'warn' },
+    { prompt: '✓', text: '47/47 tests passed. PR #482 auto-merged into main.', cls: 'success' },
   ];
 
   let lineIndex = 0;
@@ -129,11 +130,11 @@ function initPipelineViz() {
   const detailText = document.getElementById('detail-text');
 
   const details = [
-    'git push origin main → webhook received → parsing commit diff...',
-    'Analyzing changed files: src/auth/Login.tsx, src/auth/Register.tsx (+47, -12 lines)',
-    'POST api.anthropic.com/v1/messages → Claude-3.5-Sonnet → generating test logic...',
-    'Writing auth.spec.ts → 12 new assertions → self-healing 3 broken selectors...',
-    '✓ 47/47 tests passed → PR #482 opened → auto-merge enabled → CI green'
+    'git push origin main → webhook fires → Krybit GitHub App receives payload',
+    'Parsing commit diff → 3 files changed: Login.tsx (+22), Register.tsx (+18), AuthGuard.tsx (+7)',
+    'POST api.anthropic.com/v1/messages → diff + DOM snapshot + test context → response: updated assertions',
+    'Writing auth.spec.ts → 12 new Playwright assertions → patching 3 stale selectors in dashboard.spec.ts',
+    '✓ 47/47 passed → branch krybit/test-update-482 → PR opened → CI green → auto-merged'
   ];
 
   let currentStep = 0;
